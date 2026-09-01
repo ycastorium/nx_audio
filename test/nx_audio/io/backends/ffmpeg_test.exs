@@ -148,7 +148,7 @@ defmodule NxAudio.IO.Backends.FFmpegTest do
                 bits_per_sample: 0,
                 encoding: NxAudio.IO.Encoding.Type.MP3,
                 num_channels: 1,
-                num_frames: 15_114_240,
+                num_frames: 22_050,
                 sample_rate: 22_050
               }} == FFmpeg.info(uri)
     end
@@ -287,7 +287,7 @@ defmodule NxAudio.IO.Backends.FFmpegTest do
       uri = "test/fixtures/audio_samples/compressed.mp3"
 
       expected = %AudioMetadata{
-        num_frames: 84_787_200,
+        num_frames: 131_047,
         sample_rate: 22_050,
         num_channels: 1,
         bits_per_sample: 0,

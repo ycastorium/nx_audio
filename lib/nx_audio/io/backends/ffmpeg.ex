@@ -33,10 +33,12 @@ defmodule NxAudio.IO.Backends.FFmpeg do
     result
     |> List.first()
     |> then(fn probe ->
+      sample_rate = String.to_integer(probe["sample_rate"])
+
       {:ok,
        %AudioMetadata{
-         sample_rate: probe["sample_rate"] |> String.to_integer(),
-         num_frames: probe["duration_ts"],
+         sample_rate: sample_rate,
+         num_frames: frame_count(probe, sample_rate),
          num_channels: probe["channels"],
          bits_per_sample: probe["bits_per_sample"],
          encoding: probe["codec_name"] |> codec_name_to_encoding()
@@ -46,5 +48,15 @@ defmodule NxAudio.IO.Backends.FFmpeg do
 
   defp parse_ffprobe_result({:error, err}) do
     {:error, InvalidMetadata.exception(reason: err)}
+  end
+
+  defp frame_count(probe, sample_rate) do
+    [numerator, denominator] =
+      probe["time_base"]
+      |> String.split("/", parts: 2)
+      |> Enum.map(&String.to_integer/1)
+
+    scaled_frames = probe["duration_ts"] * numerator * sample_rate
+    div(scaled_frames + div(denominator, 2), denominator)
   end
 end

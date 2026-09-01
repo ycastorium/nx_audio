@@ -70,7 +70,7 @@ defmodule NxAudio.Transforms.Spectrogram do
         if Nx.rank(tensor) == 1, do: [{pad_size, pad_size}], else: [{0, 0}, {pad_size, pad_size}]
 
       case opts[:pad_mode] do
-        :reflect -> Nx.reflect(tensor, padding_config: padding)
+        :reflect -> Nx.pad_outer(tensor, :reflect, padding)
         _ -> Nx.pad(tensor, 0, padding_config: padding)
       end
     else
@@ -86,7 +86,7 @@ defmodule NxAudio.Transforms.Spectrogram do
           else: [{0, 0}, {opts[:pad], opts[:pad]}]
 
       case opts[:pad_mode] do
-        :reflect -> Nx.reflect(tensor, padding_config: padding)
+        :reflect -> Nx.pad_outer(tensor, :reflect, padding)
         _ -> Nx.pad(tensor, 0, padding_config: padding)
       end
     else
