@@ -13,13 +13,13 @@ jobs:
   release-please:
     strategy:
       matrix:
-        elixir: ["1.18.1"]
-        otp: ["27.2"]
+        elixir: ["1.20.3"]
+        otp: ["29.0.5"]
     runs-on: ubuntu-latest
     steps:
       - name: "Prepare Release"
         id: release
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           release-type: elixir
 
@@ -31,7 +31,7 @@ jobs:
           otp-version: ${{ matrix.otp }}
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Fetch and Compile Dependencies

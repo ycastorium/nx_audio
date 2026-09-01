@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup FFmpeg
         uses: federicocarboni/setup-ffmpeg@v3.1
@@ -32,7 +32,7 @@ jobs:
 
       - name: Restore deps and _build cache
         id: mix-deps
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             deps
@@ -47,7 +47,7 @@ jobs:
           mix deps.compile
 
       - name: PLT Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: plt-cache
         with:
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-plts-${{ hashFiles('**/mix.lock') }}
