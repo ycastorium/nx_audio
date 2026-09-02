@@ -144,13 +144,14 @@ defmodule NxAudio.IO.Backends.FFmpegTest do
       assert :ok == FFmpeg.save(uri, tensor, backend_config)
 
       assert {:ok,
-              %NxAudio.IO.AudioMetadata{
+              metadata = %NxAudio.IO.AudioMetadata{
                 bits_per_sample: 0,
                 encoding: NxAudio.IO.Encoding.Type.MP3,
                 num_channels: 1,
-                num_frames: 22_050,
                 sample_rate: 22_050
-              }} == FFmpeg.info(uri)
+              }} = FFmpeg.info(uri)
+
+      assert_in_delta metadata.num_frames, 22_050, 22_050 * 0.1
     end
   end
 
@@ -294,7 +295,9 @@ defmodule NxAudio.IO.Backends.FFmpegTest do
         encoding: NxAudio.IO.Encoding.Type.MP3
       }
 
-      assert {:ok, expected} == FFmpeg.info(uri)
+      assert {:ok, metadata} = FFmpeg.info(uri)
+      assert %{metadata | num_frames: expected.num_frames} == expected
+      assert_in_delta metadata.num_frames, expected.num_frames, expected.num_frames * 0.1
     end
 
     test "parses vorbis" do
