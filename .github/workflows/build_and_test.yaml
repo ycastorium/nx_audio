@@ -11,8 +11,8 @@ jobs:
   build:
     strategy:
       matrix:
-        elixir: ["1.18.1"]
-        otp: ["27.2"]
+        elixir: ["1.20.3"]
+        otp: ["29.0.5"]
 
     name: Build and test
     runs-on: ubuntu-latest
