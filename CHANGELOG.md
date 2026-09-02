@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2](https://github.com/ycastorium/nx_audio/compare/v0.3.1...v0.3.2) (2026-09-02)
+
+
+### Bug Fixes
+
+* Fixed flaky test with a delta ([6496107](https://github.com/ycastorium/nx_audio/commit/64961070a3d2552f3ab0af742134644c92441b0b))
+* Fixed tests and removed deprecated nx function ([6d928f1](https://github.com/ycastorium/nx_audio/commit/6d928f1c71b8ffac49ba6267464bc49175bc2731))
+
 ## 0.3.1 (2025-04-08)
 
 
